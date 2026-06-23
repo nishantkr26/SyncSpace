@@ -18,13 +18,6 @@ public class JWTUtil {
         this.key = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
     }
 
-    private final long expirationTime = 3600000; // 1 hour
-
-    public String generateToken(String username) {
-        return Jwts.builder().setSubject(username)
-                .setExpiration(new java.util.Date(System.currentTimeMillis() + expirationTime)).signWith(key).compact();
-    }
-
     public Boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
